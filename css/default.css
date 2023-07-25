@@ -1,0 +1,122 @@
+
+html {
+  color: #031B58;
+  font-size: 1em;
+  line-height: 1.4;
+  background-color: #F8F8F8;
+  font-family: 'Work Sans', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: #031B58;
+  padding: 1rem;
+}
+
+s {
+  font-weight: 200;
+}
+
+#container {
+  width: 100vw;
+}
+
+header {
+  max-width: 300px;
+  padding: 1rem;
+  margin-top: -6rem;
+}
+
+h1 {
+  font-size: 2.125rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+
+nav {
+  width: 94vw;
+  display: flex;
+  justify-content: right;
+  position: absolute;
+  bottom: 0;
+  padding: 0 6vw 5vh 0;
+  font-weight: 300;
+}
+
+ul {
+  list-style: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+li {
+  margin-bottom: 1em;
+}
+
+#dice {
+  font-size: 2.2em;
+  position: absolute;
+  bottom: 2vh;
+  left: 5vw;
+  filter: saturate(0);
+}
+
+#dice:hover {
+  filter: saturate(1);
+}
+
+
+@media only screen and (min-width: 35em) {
+
+  nav {
+    width: 100vw;
+    justify-content: center;
+    position: relative;
+    padding: 5vh 0 0 0;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+}
+
+
+
+@media only screen and (min-width: 55em) {
+
+  #container {
+    width: 70vw;
+  }
+
+  nav {
+    width: 100%;
+  }
+
+  #dice {
+    bottom: 5vh;
+  }
+
+}
+
+@media only screen and (min-width: 90em) {
+
+  #container {
+    width: 50vw;
+  }
+
+}
