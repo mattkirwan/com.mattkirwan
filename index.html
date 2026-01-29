@@ -1,56 +1,28 @@
 <!doctype html>
-<html class="no-js" lang="">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Matt Kirwan - Software Engineering Manager</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
-
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/default.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@200;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="css/90s.css"> -->
-
-  <meta name="theme-color" content="#F8F8F8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matt Kirwan</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+  <header class="site-header">
+    <h1 class="site-title">Matt Kirwan</h1>
+  </header>
 
-  <div id="container">
+  <main class="stage" aria-label="Photography slider">
+    <div class="frame" id="frame" role="region" aria-roledescription="carousel" aria-label="Image carousel">
+      <img id="slideImage" class="slide-image" alt="" draggable="false" />
+      <div class="counter" id="counter">01 / 10</div>
 
-    <header>
-      <h1>Matt Kirwan</h1>
-      <h2>The digital playground of a <s>Software Engineer</s>ing Manager.</h2>
-    </header> 
+      <!-- Optional subtle click targets (kept minimal / invisible-ish) -->
+      <button class="nav nav-left" id="prevBtn" aria-label="Previous image"></button>
+      <button class="nav nav-right" id="nextBtn" aria-label="Next image"></button>
+    </div>
+  </main>
 
-    <nav class="menu">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-
-
-    <div id="dice">🎲</div>
-
-  </div>
-
-
-
+  <script src="script.js"></script>
 </body>
-
 </html>

@@ -1,0 +1,104 @@
+:root {
+    --bg: #ffffff;
+    --text: #111111;
+    --muted: rgba(0,0,0,0.45);
+    --border: rgba(0,0,0,0.08);
+    --pad: clamp(14px, 2.2vw, 28px);
+    --header-h: 64px;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  }
+  
+  /* Centered header, no menu */
+  .site-header {
+    height: var(--header-h);
+    display: grid;
+    place-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .site-title {
+    margin: 0;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    text-transform: none;
+  }
+  
+  /* Stage fills the rest of the viewport */
+  .stage {
+    height: calc(100vh - var(--header-h));
+    display: grid;
+    place-items: center;
+    padding: var(--pad);
+  }
+  
+  /* Image frame with tasteful border + breathing room */
+  .frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 1600px; /* keeps it aesthetic on huge screens */
+    max-height: calc(100vh - var(--header-h) - (2 * var(--pad)));
+    border: 1px solid var(--border);
+    background: #fff;
+    overflow: hidden;
+    border-radius: 10px;
+    touch-action: pan-y; /* allow vertical scroll, handle horizontal swipe ourselves */
+  }
+  
+  /* Image scales to max available width/height while preserving aspect ratio */
+  .slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* key: fit within viewport with borders */
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  
+  /* XX / YY counter bottom-left, subtle */
+  .counter {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(6px);
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  
+  /* Invisible click areas for desktop convenience (still “no UI”) */
+  .nav {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 18%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+  }
+  .nav:focus { outline: 2px solid rgba(0,0,0,0.12); outline-offset: -2px; }
+  .nav-left { left: 0; }
+  .nav-right { right: 0; }
+  
+  /* Slightly reduce header height on small screens */
+  @media (max-width: 520px) {
+    :root { --header-h: 56px; }
+    .site-title { font-size: 15px; }
+    .counter { left: 10px; bottom: 10px; }
+  }
+  
