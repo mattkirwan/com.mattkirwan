@@ -112,7 +112,8 @@
       frame.className = "tile-frame";
 
       const img = document.createElement("img");
-      img.src = photo.src;
+      // The grid only ever needs the small version.
+      img.src = photo.thumb || photo.src;
       img.alt = altFor(photo);
       img.loading = i < 4 ? "eager" : "lazy";
       img.decoding = "async";

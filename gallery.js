@@ -15,9 +15,15 @@
  *
  *   sips -g pixelWidth -g pixelHeight images/yourphoto.jpg
  *
- * Note: the two files here are AVIF. They were committed as .jpg,
- * which served them under the wrong content type; they now carry the
- * .avif extension that matches their actual format.
+ * Each photograph is stored at two sizes. `src` is the full 2000px
+ * version shown in the lightbox; `thumb` is the 900px version the grid
+ * loads, which keeps the page light. Generate both with:
+ *
+ *   sips -Z 2000 -s format jpeg -s formatOptions 82 SOURCE --out images/name.jpg
+ *   sips -Z 900  -s format jpeg -s formatOptions 80 SOURCE --out images/thumbs/name.jpg
+ *
+ * Keep filenames URL-safe: lowercase, hyphens, and no '#' (a browser
+ * reads '#' as the start of a URL fragment, so the image would 404).
  *
  * `title`, `location` and `year` are all optional.
  */
@@ -38,17 +44,31 @@ window.SITE = {
       description: "",
       photos: [
         {
-          src: "images/01.avif",
-          w: 1024,
-          h: 684,
+          src: "images/20260905-horse-and-trap.jpg",
+          thumb: "images/thumbs/20260905-horse-and-trap.jpg",
+          w: 2000,
+          h: 1336,
+          alt: "A horse and trap racing along a terraced street, the background blurred by the pan",
           title: "",
           location: "",
           year: ""
         },
         {
-          src: "images/02.avif",
-          w: 684,
-          h: 1024,
+          src: "images/20250821-durham-miners-gala.jpg",
+          thumb: "images/thumbs/20250821-durham-miners-gala.jpg",
+          w: 2000,
+          h: 1333,
+          alt: "A couple in camping chairs sharing a drink above the crowd at the Durham Miners Gala",
+          title: "Durham Miners Gala",
+          location: "",
+          year: ""
+        },
+        {
+          src: "images/20250627-kites-beach.jpg",
+          thumb: "images/thumbs/20250627-kites-beach.jpg",
+          w: 2000,
+          h: 1336,
+          alt: "A small child stands with a spade on a wide beach as kites fly overhead",
           title: "",
           location: "",
           year: ""
