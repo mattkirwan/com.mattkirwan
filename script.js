@@ -15,7 +15,6 @@
 
   const el = {
     name: document.getElementById("siteName"),
-    tagline: document.getElementById("siteTagline"),
     navList: document.getElementById("navList"),
     navToggle: document.getElementById("navToggle"),
     nav: document.getElementById("siteNav"),
@@ -58,9 +57,12 @@
   const renderChrome = () => {
     if (site.name) {
       el.name.textContent = site.name;
-      document.title = `${site.name} — ${site.tagline || "Photography"}`;
+      // The tagline is not shown in the top bar, but it still names the
+      // browser tab and is what search results lead with.
+      document.title = site.tagline
+        ? `${site.name} — ${site.tagline}`
+        : site.name;
     }
-    if (site.tagline) el.tagline.textContent = site.tagline;
 
     // The nav only earns its place once there is more than one project.
     if (projects.length > 1) {
