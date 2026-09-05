@@ -1,104 +1,493 @@
+/* ---------------------------------------------------------------
+   Matt Kirwan — Photography
+   Plain CSS, no build step. Deployed as-is by GitHub Pages.
+   --------------------------------------------------------------- */
+
 :root {
-    --bg: #ffffff;
-    --text: #111111;
-    --muted: rgba(0,0,0,0.45);
-    --border: rgba(0,0,0,0.08);
-    --pad: clamp(14px, 2.2vw, 28px);
-    --header-h: 64px;
+  --bg: #ffffff;
+  --fg: #14141a;
+  --fg-muted: #6b6b76;
+  --fg-faint: #a0a0aa;
+  --rule: #e7e7ea;
+  --tile-bg: #f2f2f4;
+
+  --sidebar-width: 15rem;
+  --gap: 1rem;
+  --pad: 2rem;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d0d0f;
+    --fg: #ececf0;
+    --fg-muted: #90909c;
+    --fg-faint: #62626e;
+    --rule: #24242a;
+    --tile-bg: #1a1a1f;
   }
-  
-  * { box-sizing: border-box; }
-  
-  html, body {
-    height: 100%;
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Keep the hidden attribute authoritative over the display rules below. */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 0.75rem 1rem;
+  background: var(--fg);
+  color: var(--bg);
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------
+   Layout
+   --------------------------------------------------------------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  border-right: 1px solid var(--rule);
+}
+
+.sidebar-inner {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: var(--pad) 1.5rem;
+  min-height: 100vh;
+}
+
+.wordmark {
+  display: block;
+}
+
+.wordmark-name {
+  display: block;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.wordmark-tagline {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+}
+
+.nav-toggle {
+  display: none;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.nav-list a {
+  font-size: 0.9375rem;
+  color: var(--fg-muted);
+  transition: color 0.18s var(--ease);
+}
+
+.nav-list a:hover,
+.nav-list a[aria-current="page"] {
+  color: var(--fg);
+}
+
+.sidebar-footer {
+  margin: auto 0 0;
+  font-size: 0.8125rem;
+  color: var(--fg-muted);
+}
+
+.sidebar-footer a {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  transition: border-color 0.18s var(--ease);
+}
+
+.sidebar-footer a:hover {
+  border-color: currentColor;
+}
+
+.content {
+  padding: var(--pad);
+  min-width: 0;
+}
+
+.project-intro {
+  max-width: 34rem;
+  margin: 0 0 2rem;
+}
+
+.project-title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-description {
+  margin: 0.5rem 0 0;
+  color: var(--fg-muted);
+}
+
+.empty {
+  color: var(--fg-muted);
+}
+
+.empty code {
+  font-size: 0.9em;
+}
+
+/* ---------------------------------------------------------------
+   Masonry grid
+   CSS multi-column keeps every photo at its true aspect ratio
+   with no cropping and no JavaScript layout pass.
+   --------------------------------------------------------------- */
+
+.grid {
+  columns: 3 20rem;
+  column-gap: var(--gap);
+}
+
+.tile {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  margin: 0 0 var(--gap);
+  background: none;
+  cursor: zoom-in;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  /* Prevents the tile being split across columns in Safari. */
+  overflow: hidden;
+}
+
+.tile-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--tile-bg);
+}
+
+.tile img {
+  width: 100%;
+  height: auto;
+  transition: opacity 0.6s var(--ease), transform 0.5s var(--ease);
+}
+
+/* Fade each photo in once it has decoded. */
+.tile img:not(.is-loaded) {
+  opacity: 0;
+}
+
+@media (hover: hover) {
+  .tile:hover img {
+    transform: scale(1.02);
   }
-  
-  /* Centered header, no menu */
-  .site-header {
-    height: var(--header-h);
-    display: grid;
-    place-items: center;
-    border-bottom: 1px solid var(--border);
+}
+
+/* ---------------------------------------------------------------
+   Lightbox
+   --------------------------------------------------------------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  animation: fade-in 0.22s var(--ease);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
   }
-  
-  .site-title {
-    margin: 0;
-    font-size: 16px;
-    letter-spacing: 0.08em;
-    font-weight: 500;
-    text-transform: none;
+}
+
+.lightbox-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 3.5rem 4.5rem 4.5rem;
+  touch-action: pan-y;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: opacity 0.25s var(--ease);
+}
+
+.lightbox-image.is-swapping {
+  opacity: 0;
+}
+
+/* Close / navigation controls */
+
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--fg-muted);
+  transition: color 0.18s var(--ease);
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover {
+  color: var(--fg);
+}
+
+.lightbox-close {
+  top: 0;
+  right: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+/* Drawn with CSS so there are no icon files to load. */
+.lightbox-close::before,
+.lightbox-close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.lightbox-close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.lightbox-close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.lightbox-nav {
+  top: 0;
+  bottom: 0;
+  width: 4.5rem;
+}
+
+.lightbox-prev {
+  left: 0;
+  cursor: w-resize;
+}
+
+.lightbox-next {
+  right: 0;
+  cursor: e-resize;
+}
+
+.lightbox-nav::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+}
+
+.lightbox-prev::before {
+  transform: translate(-40%, -50%) rotate(-135deg);
+}
+
+.lightbox-next::before {
+  transform: translate(-60%, -50%) rotate(45deg);
+}
+
+.lightbox-nav[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Caption bar */
+
+.lightbox-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.25rem 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--fg-muted);
+  pointer-events: none;
+}
+
+.lightbox-caption,
+.lightbox-counter {
+  margin: 0;
+}
+
+.lightbox-counter {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  color: var(--fg-faint);
+}
+
+/* ---------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------- */
+
+@media (max-width: 60rem) {
+  :root {
+    --pad: 1.25rem;
   }
-  
-  /* Stage fills the rest of the viewport */
-  .stage {
-    height: calc(100vh - var(--header-h));
-    display: grid;
-    place-items: center;
-    padding: var(--pad);
-  }
-  
-  /* Image frame with tasteful border + breathing room */
-  .frame {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    max-width: 1600px; /* keeps it aesthetic on huge screens */
-    max-height: calc(100vh - var(--header-h) - (2 * var(--pad)));
-    border: 1px solid var(--border);
-    background: #fff;
-    overflow: hidden;
-    border-radius: 10px;
-    touch-action: pan-y; /* allow vertical scroll, handle horizontal swipe ourselves */
-  }
-  
-  /* Image scales to max available width/height while preserving aspect ratio */
-  .slide-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* key: fit within viewport with borders */
+
+  .layout {
     display: block;
-    user-select: none;
-    -webkit-user-drag: none;
   }
-  
-  /* XX / YY counter bottom-left, subtle */
-  .counter {
-    position: absolute;
-    left: 14px;
-    bottom: 12px;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(6px);
-    padding: 6px 8px;
-    border-radius: 8px;
-    border: 1px solid rgba(0,0,0,0.06);
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
   }
-  
-  /* Invisible click areas for desktop convenience (still “no UI”) */
-  .nav {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 18%;
-    border: none;
-    background: transparent;
+
+  .sidebar-inner {
+    position: static;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem var(--pad);
+  }
+
+  /* Nav collapses behind a Menu button on small screens. */
+  .nav-toggle {
+    display: block;
+    justify-self: end;
+    padding: 0.35rem 0;
+    border: 0;
+    background: none;
+    color: var(--fg-muted);
+    font: inherit;
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
     cursor: pointer;
-    padding: 0;
   }
-  .nav:focus { outline: 2px solid rgba(0,0,0,0.12); outline-offset: -2px; }
-  .nav-left { left: 0; }
-  .nav-right { right: 0; }
-  
-  /* Slightly reduce header height on small screens */
-  @media (max-width: 520px) {
-    :root { --header-h: 56px; }
-    .site-title { font-size: 15px; }
-    .counter { left: 10px; bottom: 10px; }
+
+  .nav {
+    grid-column: 1 / -1;
+    display: none;
   }
-  
+
+  .nav.is-open {
+    display: block;
+  }
+
+  .sidebar-footer {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+
+  .grid {
+    columns: 2 12rem;
+  }
+
+  .lightbox-stage {
+    padding: 3.25rem 0.75rem 3.5rem;
+  }
+
+  .lightbox-nav {
+    width: 22%;
+  }
+
+  /* On touch screens the arrows are hints; swiping is the real control. */
+  .lightbox-nav::before {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

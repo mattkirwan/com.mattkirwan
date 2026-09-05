@@ -1,28 +1,87 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Matt Kirwan</title>
+
+  <title>Matt Kirwan — Photography</title>
+  <meta name="description" content="Photography by Matt Kirwan." />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Matt Kirwan — Photography" />
+  <meta property="og:description" content="Photography by Matt Kirwan." />
+  <meta property="og:url" content="https://mattkirwan.com/" />
+  <meta property="og:image" content="https://mattkirwan.com/images/01.avif" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)" />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <header class="site-header">
-    <h1 class="site-title">Matt Kirwan</h1>
-  </header>
+  <a class="skip-link" href="#gallery">Skip to gallery</a>
 
-  <main class="stage" aria-label="Photography slider">
-    <div class="frame" id="frame" role="region" aria-roledescription="carousel" aria-label="Image carousel">
-      <img id="slideImage" class="slide-image" alt="" draggable="false" />
-      <div class="counter" id="counter">01 / 10</div>
+  <div class="layout">
 
-      <!-- Optional subtle click targets (kept minimal / invisible-ish) -->
-      <button class="nav nav-left" id="prevBtn" aria-label="Previous image"></button>
-      <button class="nav nav-right" id="nextBtn" aria-label="Next image"></button>
+    <!-- Sidebar: identity and project nav -->
+    <header class="sidebar">
+      <div class="sidebar-inner">
+        <a class="wordmark" href="./">
+          <span class="wordmark-name" id="siteName">Matt Kirwan</span>
+          <span class="wordmark-tagline" id="siteTagline">Photography</span>
+        </a>
+
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav">
+          <span class="nav-toggle-label">Menu</span>
+        </button>
+
+        <nav class="nav" id="siteNav" aria-label="Projects">
+          <ul class="nav-list" id="navList"></ul>
+        </nav>
+
+        <p class="sidebar-footer">
+          <a href="mailto:matthewkirwan@gmail.com">Get in touch</a>
+        </p>
+      </div>
+    </header>
+
+    <!-- Gallery -->
+    <main class="content">
+      <div class="project-intro" id="projectIntro" hidden>
+        <h1 class="project-title" id="projectTitle"></h1>
+        <p class="project-description" id="projectDescription"></p>
+      </div>
+
+      <div class="grid" id="gallery" aria-label="Photographs"></div>
+
+      <p class="empty" id="emptyState" hidden>
+        No photographs yet. Add them to <code>gallery.js</code>.
+      </p>
+    </main>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer" hidden>
+    <div class="lightbox-stage" id="lightboxStage">
+      <img class="lightbox-image" id="lightboxImage" alt="" draggable="false" />
     </div>
-  </main>
 
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close viewer"></button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous photograph"></button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next photograph"></button>
+
+    <div class="lightbox-bar">
+      <p class="lightbox-caption" id="lightboxCaption"></p>
+      <p class="lightbox-counter" id="lightboxCounter"></p>
+    </div>
+  </div>
+
+  <script src="gallery.js"></script>
   <script src="script.js"></script>
 </body>
+
 </html>
