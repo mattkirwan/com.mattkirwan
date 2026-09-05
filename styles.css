@@ -11,7 +11,6 @@
   --rule: #e7e7ea;
   --tile-bg: #f2f2f4;
 
-  --sidebar-width: 15rem;
   --gap: 1rem;
   --pad: 2rem;
 
@@ -91,23 +90,24 @@ img {
    --------------------------------------------------------------- */
 
 .layout {
-  display: grid;
-  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
   min-height: 100vh;
 }
 
-.sidebar {
-  border-right: 1px solid var(--rule);
-}
-
-.sidebar-inner {
+.topbar {
   position: sticky;
   top: 0;
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+}
+
+.topbar-inner {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
-  padding: var(--pad) 1.5rem;
-  min-height: 100vh;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.5rem var(--pad);
+  text-align: center;
 }
 
 .wordmark {
@@ -139,8 +139,9 @@ img {
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
 }
 
 .nav-list a {
@@ -154,30 +155,17 @@ img {
   color: var(--fg);
 }
 
-.sidebar-footer {
-  margin: auto 0 0;
-  font-size: 0.8125rem;
-  color: var(--fg-muted);
-}
-
-.sidebar-footer a {
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 1px;
-  transition: border-color 0.18s var(--ease);
-}
-
-.sidebar-footer a:hover {
-  border-color: currentColor;
-}
-
 .content {
+  max-width: 96rem;
+  margin: 0 auto;
   padding: var(--pad);
   min-width: 0;
 }
 
 .project-intro {
   max-width: 34rem;
-  margin: 0 0 2rem;
+  margin: 0 auto 2rem;
+  text-align: center;
 }
 
 .project-title {
@@ -314,11 +302,15 @@ img {
   color: var(--fg);
 }
 
+/* The next/prev arrows run the full height of the stage and would
+   otherwise sit on top of the close button, which comes earlier in the
+   DOM. Lift the close button above them so its hit area always wins. */
 .lightbox-close {
   top: 0;
   right: 0;
   width: 3.5rem;
   height: 3.5rem;
+  z-index: 2;
 }
 
 /* Drawn with CSS so there are no icon files to load. */
@@ -345,6 +337,7 @@ img {
   top: 0;
   bottom: 0;
   width: 4.5rem;
+  z-index: 1;
 }
 
 .lightbox-prev {
@@ -418,30 +411,15 @@ img {
     --pad: 1.25rem;
   }
 
-  .layout {
-    display: block;
-  }
-
-  .sidebar {
-    border-right: 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .sidebar-inner {
-    position: static;
-    min-height: 0;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
+  .topbar-inner {
     gap: 0.75rem;
-    padding: 1.25rem var(--pad);
+    padding: 1.15rem var(--pad);
   }
 
   /* Nav collapses behind a Menu button on small screens. */
   .nav-toggle {
     display: block;
-    justify-self: end;
-    padding: 0.35rem 0;
+    padding: 0.15rem 0;
     border: 0;
     background: none;
     color: var(--fg-muted);
@@ -452,17 +430,17 @@ img {
   }
 
   .nav {
-    grid-column: 1 / -1;
     display: none;
+    width: 100%;
   }
 
   .nav.is-open {
     display: block;
   }
 
-  .sidebar-footer {
-    grid-column: 1 / -1;
-    margin: 0;
+  .nav-list {
+    flex-direction: column;
+    gap: 0.7rem;
   }
 
   .grid {
