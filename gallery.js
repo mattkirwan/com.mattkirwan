@@ -44,6 +44,16 @@ window.SITE = {
       description: "",
       photos: [
         {
+          src: "images/skate-bowl.jpg",
+          thumb: "images/thumbs/skate-bowl.jpg",
+          w: 2000,
+          h: 1336,
+          alt: "A young skater lies resting on the floor of a skate bowl beneath a grinning flame-head logo, helmet and board scattered nearby",
+          title: "",
+          location: "",
+          year: ""
+        },
+        {
           src: "images/20260905-horse-and-trap.jpg",
           thumb: "images/thumbs/20260905-horse-and-trap.jpg",
           w: 2000,
